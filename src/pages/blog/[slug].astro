@@ -1,0 +1,21 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+// 生成动态路由路径
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post }, // 👈 把 post 数据传入页面
+  }));
+}
+type Props = {
+  post: CollectionEntry<"posts">;
+};
+// 获取单篇文章的内容
+const { post } = Astro.props;
+---
+
+
+{post.data.title}
