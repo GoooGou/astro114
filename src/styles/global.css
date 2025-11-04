@@ -1,0 +1,4 @@
+@import "tailwindcss";
+@theme{
+    --aspect-thumbnail: 16/9;
+}

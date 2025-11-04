@@ -1,0 +1,18 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import PostList from "../components/PostList.astro";
+
+const allpost = await getCollection("posts");
+console.log("✅ 浏览器看到的 allpost:", allpost);
+---
+
+<Layout title="blog" >
+  <main class=" max-sm:px-5 max-w-7xl mx-auto w-full my-12">
+    <h1 class="text-3xl text-amber-600 font-bold mb-5">
+      这是博客页面
+    </h1>
+    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta assumenda quibusdam dignissimos molestias, at consequuntur inventore nihil exercitationem nisi dolorem dicta necessitatibus odio itaque delectus adipisci. Quidem optio ab odit.</p>
+  </main>
+  <PostList posts={allpost} />
+</Layout>

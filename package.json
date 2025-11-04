@@ -3,12 +3,16 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --host 0.0.0.0",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.15.2"
+    "@fontsource/cabin": "^5.2.8",
+    "@tailwindcss/vite": "^4.1.16",
+    "astro": "^5.15.2",
+    "date-fns": "^4.1.0",
+    "tailwindcss": "^4.1.16"
   }
 }
