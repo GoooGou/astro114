@@ -4,16 +4,17 @@ type Props = {
   post: CollectionEntry<"posts">;
 };
 const { post } = Astro.props;
+const cleanPath = post.data.image.replace("./", "/");
 
 ---
-
 <article class="card p-4 bg-gray-800 mb-2">
   <a
-    href={`/blog/${post.slug}`}
+    href={cleanPath}
     class="text-xl font-bold text-blue-600 pointer"
   >
+  
     <img
-      src={post.data.image}
+      src={cleanPath}
       alt={post.data.title}
       class="object-cover rounded-2xl shadow-2xl aspect-thumbnail mb-6"
       width={1024}

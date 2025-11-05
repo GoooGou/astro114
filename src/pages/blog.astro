@@ -2,18 +2,24 @@
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import PostList from "../components/PostList.astro";
+import Main from "../components/Main.astro";
+import H1 from "../components/H1.astro";
+import Paganation from "../components/Paganation.astro";
 
-const allpost = await getCollection("posts");
+const posts = (await getCollection("posts")).slice(0, 6);
+// console.log('blog', posts);
+
 ---
-<!-- <pre>{JSON.stringify(allpost, null, 2)}</pre> -->
+<!-- <pre>{JSON.stringify(posts, null, 2)}</pre> -->
 
 <Layout title="blog" >
-  <main class=" max-sm:px-5 max-w-7xl mx-auto w-full my-12">
-    <h1 class="text-3xl text-amber-600 font-bold mb-5">
-      这是博客页面
-    </h1>
-    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta assumenda quibusdam dignissimos molestias, at consequuntur inventore nihil exercitationem nisi dolorem dicta necessitatibus odio itaque delectus adipisci. Quidem optio ab odit.</p>
-  </main>
+  <Main>
+    <H1 title="这是博客页面" />
+    <p class="mb-12">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta assumenda quibusdam dignissimos molestias, at consequuntur inventore nihil exercitationem nisi dolorem dicta necessitatibus odio itaque delectus adipisci. Quidem optio ab odit.</p>
   <!-- 文章列表 -->
-  <PostList posts={allpost} />
+  <PostList posts={posts} />
+  <div class="mt-12">
+        <Paganation nextURL="/blog/2" />
+    </div>
+  </Main>
 </Layout>

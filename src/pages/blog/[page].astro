@@ -1,0 +1,44 @@
+---
+import type { GetStaticPathsOptions, Page } from "astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import H1 from "../../components/H1.astro";
+import Main from "../../components/Main.astro";
+import PostList from "../../components/PostList.astro";
+import Layout from "../../layouts/Layout.astro";
+import Paganation from "../../components/Paganation.astro";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const allPosts = await getCollection("posts");
+  return paginate(allPosts, { pageSize: 6 });
+}
+
+type Props = {
+  page: Page;
+};
+const { page } = Astro.props;
+console.log("page", page);
+console.log("page.next", page.url.next);
+const posts = page.data as CollectionEntry<"posts">[];
+---
+
+<Layout title="blog">
+  <Main>
+    <H1 title="这是分页" />
+    <p class="mb-12">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta assumenda
+      quibusdam dignissimos molestias, at consequuntur inventore nihil
+      exercitationem nisi dolorem dicta necessitatibus odio itaque delectus
+      adipisci. Quidem optio ab odit.
+    </p>
+    <!-- 文章列表 -->
+    <!-- 分页 -->
+    <div class="mb-12">
+        <Paganation prevURL={page.url.prev} nextURL={page.url.next} />
+    </div>
+    <PostList posts={posts} />
+    <!-- 分页 -->
+    <div class="mt-12">
+        <Paganation prevURL={page.url.prev} nextURL={page.url.next} />
+    </div>
+  </Main>
+</Layout>

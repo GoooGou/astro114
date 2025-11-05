@@ -2,3 +2,6 @@
 @theme{
     --aspect-thumbnail: 16/9;
 }
+@plugin "@tailwindcss/typography";
+
+

@@ -3,6 +3,9 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Main from "../../components/Main.astro";
+import H1 from "../../components/H1.astro";
+import TableOfContent from "../../components/TableOfContent.astro";
+import Share from "../../components/Share.astro";
 
 // 🧩 1️⃣ 生成所有文章的静态路径
 export async function getStaticPaths() {
@@ -14,7 +17,6 @@ export async function getStaticPaths() {
     props: { post }, // 把当前文章传递给页面
   }));
 }
-
 // 🧩 2️⃣ 定义 Props 类型（可选，但建议加）
 type Props = {
   post: CollectionEntry<"posts">;
@@ -22,12 +24,35 @@ type Props = {
 
 // 🧩 3️⃣ 从 Astro.props 中取出单篇文章内容
 const { post } = Astro.props;
+const { Content, headings } = await post.render();
+// console.log(headings);
 ---
 
 <!-- 🧩 4️⃣ 页面内容开始 -->
 <Layout title={post.data.title}>
   <Main>
-    <a href="/blog" class="text-blue-600 font-bold mb-5">&larr; 返回博客列表</a>
-    </Main>
-  </article>
+    <a href="/blog" class="text-blue-600 font-bold mb-5 underline block w-full"
+      >&larr; 返回博客列表</a
+    >
+    <H1 title={post.data.title} />
+    <img
+      src={post.data.image.replace(/^\.\//, "/")}
+      alt={post.data.title}
+      class="rounded-2xl shadow-xl mb-28 aspect-thumbnail object-cover"
+      width={1024}
+      height={1024 / 2}
+    />
+    <div class="mb-12">
+      <TableOfContent headings={headings} />
+    </div>
+
+    <div class="relative">
+      <Share />
+      <div
+        class="prose prose-2xl prose-headings:text-red-400 prose-p:text-gray-200 text-white"
+      >
+        <Content />
+      </div>
+    </div>
+  </Main>
 </Layout>
