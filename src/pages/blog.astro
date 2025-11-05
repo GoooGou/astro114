@@ -4,8 +4,8 @@ import Layout from "../layouts/Layout.astro";
 import PostList from "../components/PostList.astro";
 
 const allpost = await getCollection("posts");
-console.log("✅ 浏览器看到的 allpost:", allpost);
 ---
+<!-- <pre>{JSON.stringify(allpost, null, 2)}</pre> -->
 
 <Layout title="blog" >
   <main class=" max-sm:px-5 max-w-7xl mx-auto w-full my-12">
@@ -14,5 +14,6 @@ console.log("✅ 浏览器看到的 allpost:", allpost);
     </h1>
     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta assumenda quibusdam dignissimos molestias, at consequuntur inventore nihil exercitationem nisi dolorem dicta necessitatibus odio itaque delectus adipisci. Quidem optio ab odit.</p>
   </main>
+  <!-- 文章列表 -->
   <PostList posts={allpost} />
 </Layout>

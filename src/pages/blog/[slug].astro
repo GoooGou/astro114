@@ -1,21 +1,33 @@
 ---
-import { getCollection } from "astro:content";
+// 页面标题：[slug].astro
+import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import Main from "../../components/Main.astro";
 
-// 生成动态路由路径
+// 🧩 1️⃣ 生成所有文章的静态路径
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
+
+  // 返回每个文章的路由信息
   return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: { post }, // 👈 把 post 数据传入页面
+    params: { slug: post.slug }, // URL 参数，比如 /posts/first-post
+    props: { post }, // 把当前文章传递给页面
   }));
 }
+
+// 🧩 2️⃣ 定义 Props 类型（可选，但建议加）
 type Props = {
   post: CollectionEntry<"posts">;
 };
-// 获取单篇文章的内容
+
+// 🧩 3️⃣ 从 Astro.props 中取出单篇文章内容
 const { post } = Astro.props;
 ---
 
-
-{post.data.title}
+<!-- 🧩 4️⃣ 页面内容开始 -->
+<Layout title={post.data.title}>
+  <Main>
+    <a href="/blog" class="text-blue-600 font-bold mb-5">&larr; 返回博客列表</a>
+    </Main>
+  </article>
+</Layout>
